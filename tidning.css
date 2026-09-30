@@ -229,7 +229,7 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   mix-blend-mode: multiply;
 }
 /* Sticky och float skapar egna staplingskontexter; ge dem papperet att trycka på. */
-.bild, .tumnagel, .annons-yta { background: var(--papper); }
+.bild, .tumnagel, .kungorelse-yta { background: var(--papper); }
 /* I kvällsupplagan kan svärtan inte tryckas på mörkt papper. Sticket läggs i stället
    som ett beskuret, dämpat blad, så att det vita kring gravyrens papper försvinner
    och bladet inte lyser. */
@@ -256,12 +256,12 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
 .artikel-sida { display: contents; }
 .artikel-kropp .bild { order: 0; }
 .artikel-text { order: 1; }
-.marginal { order: 2; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--linje-svag); }
-.marginal .annons { max-width: 15rem; margin: 0 auto; }
+.sidospalt { order: 2; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--linje-svag); }
+.sidospalt .kungorelse { max-width: 15rem; margin: 0 auto; }
 
 /* Bred vy: bilden och annonsen går ut i marginalen och texten får sin spalt bredvid */
 @media (min-width: 62rem) {
-  .artikel.med-bild, .artikel:has(.med-annons) { max-width: 60rem; }
+  .artikel.med-bild, .artikel:has(.med-kungorelse) { max-width: 60rem; }
   .artikel-kropp:has(.artikel-sida) {
     display: grid;
     grid-template-columns: minmax(0, 24rem) minmax(0, var(--satsbredd));
@@ -273,9 +273,9 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .artikel-sida .bild { margin: 0; }
   /* Utan annons står bilden kvar medan texten rullar förbi. Med annons blir
      marginalen för hög för att stå still i en vanlig skärm. */
-  .artikel-kropp:not(.med-annons) .artikel-sida { position: sticky; top: 1rem; }
-  .marginal { margin-top: 1.8rem; padding-top: 1.4rem; }
-  .marginal .annons { max-width: 17rem; }
+  .artikel-kropp:not(.med-kungorelse) .artikel-sida { position: sticky; top: 1rem; }
+  .sidospalt { margin-top: 1.8rem; padding-top: 1.4rem; }
+  .sidospalt .kungorelse { max-width: 17rem; }
 }
 
 /* ---------- Kolumnvinjetten ---------- */
@@ -480,39 +480,39 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
 .stora { border-top: 1px solid var(--linje); }
 .stack + .stack { border-top: 1px solid var(--linje); }
 .notiser { border-top: 1px solid var(--linje); }
-.notiser > .annons { margin: 1rem auto; max-width: 15rem; }
+.notiser > .kungorelse { margin: 1rem auto; max-width: 15rem; }
 
 /* ---------- Annonserna ---------- */
 
-.annons { margin: 1rem auto; padding: 0; max-width: 24rem; }
-.annons-yta { border: 1px solid var(--linje); padding: 5px; }
-.annons img, .annons-platshallare { display: block; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-.annons-platshallare {
+.kungorelse { margin: 1rem auto; padding: 0; max-width: 24rem; }
+.kungorelse-yta { border: 1px solid var(--linje); padding: 5px; }
+.kungorelse img, .kungorelse-platshallare { display: block; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.kungorelse-platshallare {
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   font-family: var(--rubrik); font-size: 1rem; outline: 1px dashed var(--linje-svag); outline-offset: -8px; padding: 1rem;
 }
-.annons-platshallare span { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grå); }
+.kungorelse-platshallare span { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grå); }
 /* Annonserna är tryckta ända ut i kanten; beskärningen i mörkt läge är
    därför mindre än gravyrernas, så att ramverket står kvar. */
 @media (prefers-color-scheme: dark) {
-  .annons img { mix-blend-mode: normal; clip-path: inset(1.2%); filter: brightness(0.66) sepia(0.3) contrast(1.08); }
+  .kungorelse img { mix-blend-mode: normal; clip-path: inset(1.2%); filter: brightness(0.66) sepia(0.3) contrast(1.08); }
 }
 /* Annonser i en spalt är inbrutna i den: full spaltbredd, ingen luft omkring. */
-.stack > .annons, .sid-hoger > .annons, .spalt > .annons { max-width: none; width: 100%; margin: 1.1rem 0 0; }
+.stack > .kungorelse, .sid-hoger > .kungorelse, .spalt > .kungorelse { max-width: none; width: 100%; margin: 1.1rem 0 0; }
 
-.annonsfalt { margin-top: 1.6rem; }
-.annonsfalt .avdelning { margin-bottom: 0; border-bottom: 0; }
+.kungorelsefalt { margin-top: 1.6rem; }
+.kungorelsefalt .avdelning { margin-bottom: 0; border-bottom: 0; }
 /* Annonsfältet: en tät rad där annonserna står kant i kant. Varje annons får
    bredd efter sitt format (flex-grow = formatkvoten), så att alla blir lika
    höga och raden fyller satsytan. I telefonen tar en liggande annons en egen rad. */
-.annonsrad { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--linje); }
-.annonsrad .annons { margin: 0 0 0 -1px; flex-basis: 0; flex-shrink: 1; min-width: 0; max-width: none; }
-.annonsrad .annons:first-child { margin-left: 0; }
-.annonsrad .annons-yta { height: auto; }
+.kungorelserad { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--linje); }
+.kungorelserad .kungorelse { margin: 0 0 0 -1px; flex-basis: 0; flex-shrink: 1; min-width: 0; max-width: none; }
+.kungorelserad .kungorelse:first-child { margin-left: 0; }
+.kungorelserad .kungorelse-yta { height: auto; }
 @media (max-width: 45.99rem) {
-  .annonsrad .format-liggande { flex-basis: 100%; margin-left: 0; }
-  .annonsrad .format-liggande + .annons { margin-left: 0; }
-  .annonsrad .format-liggande ~ .annons { flex-basis: 40%; margin-top: -1px; }
+  .kungorelserad .format-liggande { flex-basis: 100%; margin-left: 0; }
+  .kungorelserad .format-liggande + .kungorelse { margin-left: 0; }
+  .kungorelserad .format-liggande ~ .kungorelse { flex-basis: 40%; margin-top: -1px; }
 }
 
 /* ---------- Två spalter ---------- */
@@ -532,7 +532,7 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
     padding-top: 0.2rem;
   }
   .notiser .plats-liten { border-top: 0; border-bottom: 1px solid var(--linje-svag); break-inside: avoid-column; }
-  .notiser > .annons { break-inside: avoid; margin: 1rem auto; max-width: 15rem; }
+  .notiser > .kungorelse { break-inside: avoid; margin: 1rem auto; max-width: 15rem; }
   /* Huvudpuffen: bilden till vänster, ingressen bredvid. */
   .plats-huvud .art-kropp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2.2rem; align-items: start; }
   .plats-huvud.utan-bild .art-kropp { grid-template-columns: minmax(0, 1fr); }
@@ -545,10 +545,10 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .plats-kolumn.med-bild > .ingress { margin-top: 0.4rem; }
   /* Annonserna under kolumnen ställs bredvid varandra. */
   /* Kolumnen i full bredd, dess annonser i en smal spalt bredvid. */
-  .sid-hoger:has(> .annons) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 14rem); gap: 0 1.4rem; align-items: start; margin: 1.6rem 0; }
-  .sid-hoger:has(> .annons) > .art { grid-column: 1; grid-row: 1 / span 9; margin: 0 4px; }
-  .sid-hoger > .annons { grid-column: 2; margin: 4px 0 1rem; }
-  .annonsrad { flex-wrap: nowrap; }
+  .sid-hoger:has(> .kungorelse) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 14rem); gap: 0 1.4rem; align-items: start; margin: 1.6rem 0; }
+  .sid-hoger:has(> .kungorelse) > .art { grid-column: 1; grid-row: 1 / span 9; margin: 0 4px; }
+  .sid-hoger > .kungorelse { grid-column: 2; margin: 4px 0 1rem; }
+  .kungorelserad { flex-wrap: nowrap; }
 }
 
 /* ---------- Hela ombrytningen ---------- */
@@ -578,10 +578,10 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .plats-kolumn.med-bild > .bild { margin: 0.8rem auto 0.9rem; }
   .plats-kolumn .ingress { font-size: 0.95rem; }
   .plats-kolumn .vinjett { padding-left: 0.9rem; padding-right: 0.9rem; }
-  .sid-hoger:has(> .annons) { display: block; margin: 0; }
-  .sid-hoger:has(> .annons) > .art { margin: 0 4px; }
-  .sid-hoger > .annons { margin: 1.6rem 0 0; }
-  .stack > .annons { margin: 0.4rem 0 1.2rem; }
+  .sid-hoger:has(> .kungorelse) { display: block; margin: 0; }
+  .sid-hoger:has(> .kungorelse) > .art { margin: 0 4px; }
+  .sid-hoger > .kungorelse { margin: 1.6rem 0 0; }
+  .stack > .kungorelse { margin: 0.4rem 0 1.2rem; }
   /* De stora: bilden till vänster i texten, som ett stick i spalten. */
   .plats-stor .bild { float: left; width: 46%; max-width: none; margin: 0.35rem 1.1rem 0.4rem 0; }
   .plats-stor .art-huvud { margin-bottom: 0.7rem; }
@@ -590,7 +590,7 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .plats-stor::after { content: ''; display: block; clear: both; }
 
   .notiser { column-count: 3; column-gap: 2rem; border-top: 3px double var(--linje); margin-top: 0.2rem; }
-  .notiser > .annons { max-width: 12rem; margin: 0.9rem auto; }
+  .notiser > .kungorelse { max-width: 12rem; margin: 0.9rem auto; }
 }
 
 /* ======================================================================
@@ -613,8 +613,8 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
 .nedre { border-top: 3px solid var(--linje); margin-top: 0.3rem; }
 .spalt > * + * { border-top: 1px solid var(--linje); }
 .spalt + .spalt { border-top: 1px solid var(--linje); }
-.spalt > .annons { border-top: 0; margin: 1.1rem 0; }
-.spalt > .annons + * { border-top: 1px solid var(--linje); }
+.spalt > .kungorelse { border-top: 0; margin: 1.1rem 0; }
+.spalt > .kungorelse + * { border-top: 1px solid var(--linje); }
 
 /* Hög: bilden överst i full spaltbredd, rubriken under den mellan linjer. */
 .plats-hog { padding: 1.1rem 0 1.1rem; }
