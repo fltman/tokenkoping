@@ -1,0 +1,1090 @@
+/* Tokenköpings Veckoblad. Satsyta och typografi, se webb/DESIGN.md. */
+
+:root {
+  --papper: #f2ead8;
+  --papper-mork: #e8dec7;
+  --svarta: #1c1914;
+  --grå: #5e5444;
+  --linje: #2a241b;
+  --linje-svag: #b8ab90;
+  --stampel: #a3281c;
+  --lank: #1c1914;
+
+  --fraktur: 'UnifrakturMaguntia', 'Old English Text MT', serif;
+  --rubrik: 'Old Standard TT', 'Times New Roman', serif;
+  --brod: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+
+  --satsbredd: 34rem;
+  --ark: 72rem;
+  color-scheme: light;
+}
+
+/* Kvällsupplagan */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papper: #191713;
+    --papper-mork: #221f1a;
+    --svarta: #e6dcc6;
+    --grå: #a89b82;
+    --linje: #d8ccb2;
+    --linje-svag: #4d463a;
+    --stampel: #e0685a;
+    --lank: #e6dcc6;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papper);
+  color: var(--svarta);
+  font-family: var(--brod);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  font-kerning: normal;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+a { color: var(--lank); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+
+.ark {
+  max-width: var(--ark);
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+}
+
+/* ---------- Tidningshuvudet ---------- */
+
+.huvud { text-align: center; margin-bottom: 1.75rem; }
+
+.huvud-topp {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--rubrik);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grå);
+  border-bottom: 1px solid var(--linje);
+  padding-bottom: 0.4rem;
+}
+.huvud-topp span:first-child { text-align: left; }
+.huvud-topp span:last-child { text-align: right; }
+.huvud-topp .orn { font-size: 1rem; text-transform: none; color: var(--svarta); }
+
+.namn {
+  font-family: var(--fraktur);
+  font-weight: 400;
+  font-size: clamp(2.3rem, 10.5vw, 6.2rem);
+  line-height: 1.05;
+  margin: 0.6rem 0 0.1rem;
+  letter-spacing: 0.005em;
+}
+.namn a { text-decoration: none; }
+
+.motto {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--grå);
+  margin: 0 0 0.7rem;
+}
+
+.datumfalt {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--rubrik);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-top: 3px double var(--linje);
+  border-bottom: 1px solid var(--linje);
+  padding: 0.35rem 0.1rem 0.3rem;
+}
+.datumfalt span:nth-child(2) { text-align: center; }
+.datumfalt span:last-child { text-align: right; }
+
+.huvud-lankar {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  font-family: var(--rubrik);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-top: 0.35rem;
+}
+.huvud-lankar a { text-decoration: none; color: var(--grå); }
+/* ”Arkivet · Redaktionen”: punkten är ett inline-block och stryks inte under. */
+.huvud-lankar { gap: 0; }
+.huvud-lankar a + a::before { content: '·'; display: inline-block; margin: 0 0.75rem; color: var(--grå); text-decoration: none; }
+.huvud-lankar { flex-wrap: wrap; }
+.huvud-lankar a { white-space: nowrap; hyphens: none; }
+@media (max-width: 30rem) {
+  .huvud-lankar { letter-spacing: 0.08em; }
+  .huvud-lankar a + a::before { margin: 0 0.45rem; }
+}
+.huvud-lankar a:hover { color: var(--svarta); text-decoration: underline; }
+
+.huvud-liten .namn { font-size: clamp(1.8rem, 7vw, 3rem); margin-top: 0; }
+.huvud-liten { margin-bottom: 1.5rem; }
+
+@media (max-width: 40rem) {
+  .huvud-topp { justify-content: center; }
+  .huvud-topp span:not(.orn) { display: none; }
+  .datumfalt { flex-wrap: wrap; justify-content: center; font-size: 0.72rem; row-gap: 0.1rem; }
+  .datumfalt span:nth-child(2) { order: 3; flex-basis: 100%; }
+}
+
+/* ---------- Artikeln ---------- */
+
+.artikel { position: relative; max-width: var(--satsbredd); margin: 0 auto; }
+
+.nrrad {
+  font-family: var(--rubrik);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--grå);
+  margin: 0 0 0.4rem;
+}
+.nrrad span::before { content: '\00a0\00a0❧\00a0\00a0'; letter-spacing: 0; }
+
+.rubrik {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.12;
+  margin: 0;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+  text-wrap: balance;
+}
+.rubrik a { text-decoration: none; }
+.rubrik a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
+h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9rem); }
+
+.underrubrik {
+  font-family: var(--rubrik);
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0.35rem 0 0;
+  text-wrap: balance;
+}
+
+.artikel-kropp {
+  border-top: 3px double var(--linje);
+  margin-top: 1rem;
+  padding-top: 1.1rem;
+}
+
+.brodtext p { margin: 0 0 0.9em; text-align: left; }
+@media (min-width: 30rem) {
+  .brodtext p { text-align: justify; text-justify: inter-word; }
+}
+.brodtext p + p { text-indent: 1.4em; margin-top: -0.9em; }
+.brodtext > p:first-child::first-letter {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  float: left;
+  font-size: 3.55em;
+  line-height: 0.82;
+  padding: 0.08em 0.08em 0 0;
+}
+.brodtext .mellan { font-family: var(--rubrik); text-align: center; font-size: 1.1rem; margin: 1.2em 0 0.6em; }
+
+.las-vidare a::after { content: ' ☞'; font-style: normal; }
+
+.kalla {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--grå);
+  border-top: 1px solid var(--linje-svag);
+  margin: 1.2rem 0 0;
+  padding-top: 0.6rem;
+}
+.kalla a { color: var(--grå); }
+
+/* Bilden */
+.bild { margin: 0 0 1.2rem; }
+/* Gravyren har eget papper med vit marginal. I dagupplagan trycks den rakt
+   på sidan: multiply gör det vita till sidans papper och låter svärtan stå. */
+.bild img, .tumnagel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  mix-blend-mode: multiply;
+}
+/* Sticky och float skapar egna staplingskontexter; ge dem papperet att trycka på. */
+.bild, .tumnagel, .annons-yta { background: var(--papper); }
+/* I kvällsupplagan kan svärtan inte tryckas på mörkt papper. Sticket läggs i stället
+   som ett beskuret, dämpat blad, så att det vita kring gravyrens papper försvinner
+   och bladet inte lyser. */
+@media (prefers-color-scheme: dark) {
+  .bild img, .tumnagel img {
+    mix-blend-mode: normal;
+    clip-path: inset(3.8%);
+    filter: brightness(0.66) sepia(0.3) contrast(1.08);
+  }
+  .bild figcaption { margin-top: -0.2rem; }
+}
+.bild figcaption {
+  font-family: var(--rubrik);
+  font-style: italic;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--grå);
+  margin-top: 0.45rem;
+}
+
+/* Smal vy: bild, text, källrad, och annonsen sist, efter källraden. */
+.artikel-kropp { display: flex; flex-direction: column; }
+.artikel-sida { display: contents; }
+.artikel-kropp .bild { order: 0; }
+.artikel-text { order: 1; }
+.marginal { order: 2; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--linje-svag); }
+.marginal .annons { max-width: 15rem; margin: 0 auto; }
+
+/* Bred vy: bilden och annonsen går ut i marginalen och texten får sin spalt bredvid */
+@media (min-width: 62rem) {
+  .artikel.med-bild, .artikel:has(.med-annons) { max-width: 60rem; }
+  .artikel-kropp:has(.artikel-sida) {
+    display: grid;
+    grid-template-columns: minmax(0, 24rem) minmax(0, var(--satsbredd));
+    gap: 2rem;
+    justify-content: center;
+    align-items: start;
+  }
+  .artikel-sida { display: block; }
+  .artikel-sida .bild { margin: 0; }
+  /* Utan annons står bilden kvar medan texten rullar förbi. Med annons blir
+     marginalen för hög för att stå still i en vanlig skärm. */
+  .artikel-kropp:not(.med-annons) .artikel-sida { position: sticky; top: 1rem; }
+  .marginal { margin-top: 1.8rem; padding-top: 1.4rem; }
+  .marginal .annons { max-width: 17rem; }
+}
+
+/* ---------- Kolumnvinjetten ---------- */
+
+.vinjett {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  margin: 0 auto 0.7rem;
+  width: fit-content;
+  padding: 0.35rem 1.4rem 0.3rem;
+  border-top: 3px double var(--linje);
+  border-bottom: 3px double var(--linje);
+}
+.vinjett-namn {
+  font-family: var(--fraktur);
+  font-size: 1.55rem;
+  line-height: 1.1;
+}
+.vinjett-namn::before, .vinjett-namn::after { content: '❦'; font-family: var(--rubrik); font-size: 0.8em; margin: 0 0.45em; vertical-align: 0.1em; }
+.vinjett-namn::before { display: inline-block; transform: scaleX(-1); }
+.vinjett-av {
+  font-family: var(--rubrik);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grå);
+}
+.artikel-kolumn .brodtext p { text-align: left; }
+.artikel-kolumn .rubrik { font-style: italic; font-weight: 400; }
+
+/* ---------- Korrekturstämpeln ---------- */
+
+.stampel {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stampel);
+  border: 2px solid var(--stampel);
+  outline: 1px solid var(--stampel);
+  outline-offset: 2px;
+  padding: 0.2rem 0.6rem;
+  width: fit-content;
+  margin: 0 auto 1rem;
+  transform: rotate(-2.5deg);
+  opacity: 0.88;
+}
+.stampel-liten { font-size: 0.62rem; padding: 0.1rem 0.4rem; margin: 0 0 0.5rem; outline: none; }
+
+/* ---------- Avdelningsrubrik ---------- */
+
+.avdelning {
+  font-family: var(--rubrik);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 1.2rem;
+  border-top: 3px double var(--linje);
+  border-bottom: 1px solid var(--linje);
+  padding: 0.35rem 0;
+}
+
+/* ---------- Tomsidan ---------- */
+
+.tomsida {
+  text-align: center;
+  max-width: var(--satsbredd);
+  margin: 3.5rem auto 4rem;
+}
+.orn { font-family: var(--rubrik); text-align: center; color: var(--svarta); margin: 0; }
+.orn.stor { font-size: 2.2rem; margin-bottom: 1rem; }
+.tom-rubrik { font-family: var(--rubrik); font-weight: 700; font-size: clamp(1.6rem, 5.5vw, 2.3rem); line-height: 1.15; margin: 0 0 0.6rem; text-wrap: balance; }
+.tom-text { font-family: var(--rubrik); font-style: italic; font-size: 1.15rem; margin: 0 0 1.6rem; }
+
+/* ---------- Bläddring ---------- */
+
+.blader {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  max-width: 60rem;
+  margin: 2.4rem auto 0;
+  padding-top: 0.7rem;
+  border-top: 3px double var(--linje);
+  font-family: var(--rubrik);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+.blader a { text-decoration: none; }
+.blader a:hover { text-decoration: underline; }
+.blader span { display: block; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grå); margin-bottom: 0.15rem; }
+.blader .nasta { text-align: right; }
+.blader .hem { font-style: italic; align-self: center; }
+@media (max-width: 40rem) {
+  .blader { grid-template-columns: 1fr 1fr; }
+  .blader .hem { grid-column: 1 / -1; grid-row: 2; text-align: center; }
+}
+
+/* ---------- Foten ---------- */
+
+.fot {
+  margin-top: 3rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--linje);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--grå);
+  line-height: 1.5;
+}
+.fot p { margin: 0 0 0.3rem; }
+.fot .orn { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.fot a { color: var(--grå); }
+
+@media print {
+  body { background: #fff; color: #000; }
+  .blader, .fot a { display: none; }
+}
+
+/* ======================================================================
+   Tidningssidan (utgåvan). Se DESIGN.md, ”Ombrytningen”.
+   Ettan består av puffar; hela texten står på artikelsidan.
+   Telefonen först: en spalt i läsordning. Från 46rem två spalter,
+   från 66rem hela ombrytningen med kolumnen i egen högerspalt.
+   ====================================================================== */
+
+.tidningssida { position: relative; }
+.tidningssida > .stampel { margin-bottom: 1.4rem; }
+
+.art { position: relative; }
+.art-huvud .stampel-liten { margin: 0 0 0.5rem; position: relative; z-index: 2; }
+
+/* Puffen: rubrikens länk sträcks över hela puffen, bild och text inräknade. */
+.puff .rubrik a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.puff:hover .rubrik a { text-decoration: underline; text-decoration-thickness: 1px; }
+.puff .rubrik a:focus-visible { outline: none; }
+.puff:has(.rubrik a:focus-visible) .rubrik a { text-decoration: underline; text-decoration-thickness: 2px; }
+.puff:has(.rubrik a:focus-visible)::before { content: ''; position: absolute; inset: -0.4rem; border: 1px dashed var(--linje); pointer-events: none; }
+.puff .ingress p { margin: 0; hyphens: auto; }
+.puff .bild { margin: 0.8rem 0 0.9rem; }
+
+.las-vidare {
+  font-family: var(--rubrik);
+  font-style: italic;
+  font-size: 0.92rem;
+  text-align: right;
+  margin: 0.35rem 0 0;
+}
+.las-vidare a { text-decoration: none; }
+.puff:hover .las-vidare a { text-decoration: underline; }
+
+/* Rubrikgraderna */
+.plats-huvud .rubrik { font-size: clamp(2.2rem, 8.4vw, 4.2rem); line-height: 1.02; letter-spacing: -0.005em; }
+.plats-huvud .underrubrik { font-size: clamp(1.15rem, 3.4vw, 1.5rem); margin-top: 0.45rem; }
+.plats-stor .rubrik { font-size: clamp(1.6rem, 5.4vw, 1.95rem); line-height: 1.08; }
+.plats-stor .underrubrik { font-size: 1.08rem; }
+.plats-liten .rubrik { font-size: 1.22rem; line-height: 1.15; text-align: left; }
+.plats-liten .underrubrik { font-size: 0.95rem; text-align: left; margin-top: 0.15rem; }
+.plats-kolumn .rubrik { font-size: clamp(1.7rem, 5.6vw, 2.1rem); font-style: italic; font-weight: 400; }
+
+/* Huvudpuffen: rubriken över en dubbel linje, bilden stor, första stycket som ingress. */
+.plats-huvud { padding-bottom: 1.4rem; }
+.plats-huvud .art-huvud { padding-bottom: 0.8rem; border-bottom: 3px double var(--linje); margin-bottom: 1rem; }
+.plats-huvud .bild { margin: 0 0 1rem; }
+.plats-huvud .ingress { font-size: 1.16rem; line-height: 1.56; }
+.plats-huvud .bild figcaption { font-size: 0.92rem; }
+.plats-huvud .las-vidare { font-size: 1rem; margin-top: 0.7rem; }
+
+/* Stora */
+.plats-stor { padding: 1.3rem 0 1.2rem; }
+.plats-stor .bild { max-width: 13rem; margin-left: auto; margin-right: auto; }
+
+/* Små: liten bild till höger, texten runt den, ingen anfang. */
+.plats-liten { padding: 0.9rem 0; border-top: 1px solid var(--linje-svag); }
+.plats-liten .ingress { font-size: 0.95rem; line-height: 1.52; }
+.plats-liten .ingress p { text-align: left; }
+.plats-liten .bild { float: right; width: 6.4rem; margin: 0.3rem 0 0.3rem 0.9rem; }
+.plats-liten::after { content: ''; display: block; clear: both; }
+.plats-liten .brodtext > p:first-child::first-letter { float: none; font: inherit; padding: 0; line-height: inherit; }
+
+/* Kolumnen: inramad spalt */
+.plats-kolumn {
+  border: 1px solid var(--linje);
+  outline: 3px double var(--linje);
+  outline-offset: 3px;
+  padding: 1.1rem 1.1rem 1rem;
+  margin: 1.6rem 4px;
+  background: var(--papper-mork);
+}
+.plats-kolumn .bild, .plats-kolumn .bild img { background: var(--papper-mork); }
+.plats-kolumn .ingress p { text-align: left; }
+.plats-kolumn .ingress { font-size: 0.98rem; line-height: 1.58; }
+.plats-kolumn .bild { max-width: 13rem; margin-left: auto; margin-right: auto; }
+
+/* Spalterna, telefonen: huvud, stora, kolumnen, små. */
+.sidkropp { display: flex; flex-direction: column; }
+.stora { border-top: 1px solid var(--linje); }
+.stack + .stack { border-top: 1px solid var(--linje); }
+.notiser { border-top: 1px solid var(--linje); }
+.notiser > .annons { margin: 1rem auto; max-width: 15rem; }
+
+/* ---------- Annonserna ---------- */
+
+.annons { margin: 1rem auto; padding: 0; max-width: 24rem; }
+.annons-yta { border: 1px solid var(--linje); padding: 5px; }
+.annons img, .annons-platshallare { display: block; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.annons-platshallare {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  font-family: var(--rubrik); font-size: 1rem; outline: 1px dashed var(--linje-svag); outline-offset: -8px; padding: 1rem;
+}
+.annons-platshallare span { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grå); }
+/* Annonserna är tryckta ända ut i kanten; beskärningen i mörkt läge är
+   därför mindre än gravyrernas, så att ramverket står kvar. */
+@media (prefers-color-scheme: dark) {
+  .annons img { mix-blend-mode: normal; clip-path: inset(1.2%); filter: brightness(0.66) sepia(0.3) contrast(1.08); }
+}
+/* Annonser i en spalt är inbrutna i den: full spaltbredd, ingen luft omkring. */
+.stack > .annons, .sid-hoger > .annons, .spalt > .annons { max-width: none; width: 100%; margin: 1.1rem 0 0; }
+
+.annonsfalt { margin-top: 1.6rem; }
+.annonsfalt .avdelning { margin-bottom: 0; border-bottom: 0; }
+/* Annonsfältet: en tät rad där annonserna står kant i kant. Varje annons får
+   bredd efter sitt format (flex-grow = formatkvoten), så att alla blir lika
+   höga och raden fyller satsytan. I telefonen tar en liggande annons en egen rad. */
+.annonsrad { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--linje); }
+.annonsrad .annons { margin: 0 0 0 -1px; flex-basis: 0; flex-shrink: 1; min-width: 0; max-width: none; }
+.annonsrad .annons:first-child { margin-left: 0; }
+.annonsrad .annons-yta { height: auto; }
+@media (max-width: 45.99rem) {
+  .annonsrad .format-liggande { flex-basis: 100%; margin-left: 0; }
+  .annonsrad .format-liggande + .annons { margin-left: 0; }
+  .annonsrad .format-liggande ~ .annons { flex-basis: 40%; margin-top: -1px; }
+}
+
+/* ---------- Två spalter ---------- */
+
+@media (min-width: 46rem) {
+  .stora { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stora.antal-1 { grid-template-columns: minmax(0, 1fr); }
+  .stora .stack { padding: 0 1.4rem; }
+  .stora .stack + .stack { border-top: 0; border-left: 1px solid var(--linje); }
+  .stora .stack:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .stora .stack:nth-child(even) { padding-right: 0; }
+  .stora .stack:nth-child(n+3) { border-top: 1px solid var(--linje); }
+  .notiser {
+    column-count: 2;
+    column-gap: 2.4rem;
+    column-rule: 1px solid var(--linje);
+    padding-top: 0.2rem;
+  }
+  .notiser .plats-liten { border-top: 0; border-bottom: 1px solid var(--linje-svag); break-inside: avoid-column; }
+  .notiser > .annons { break-inside: avoid; margin: 1rem auto; max-width: 15rem; }
+  /* Huvudpuffen: bilden till vänster, ingressen bredvid. */
+  .plats-huvud .art-kropp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2.2rem; align-items: start; }
+  .plats-huvud.utan-bild .art-kropp { grid-template-columns: minmax(0, 1fr); }
+  .plats-huvud .bild { margin: 0; }
+  /* Kolumnen i full bredd: bilden till vänster om texten. */
+  .plats-kolumn.med-bild { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); gap: 0 1.6rem; }
+  .plats-kolumn.med-bild > * { grid-column: 1 / -1; }
+  .plats-kolumn.med-bild > .bild { grid-column: 1; grid-row: 2 / span 2; margin: 0.4rem 0 0; }
+  .plats-kolumn.med-bild > .ingress, .plats-kolumn.med-bild > .las-vidare { grid-column: 2; }
+  .plats-kolumn.med-bild > .ingress { margin-top: 0.4rem; }
+  /* Annonserna under kolumnen ställs bredvid varandra. */
+  /* Kolumnen i full bredd, dess annonser i en smal spalt bredvid. */
+  .sid-hoger:has(> .annons) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 14rem); gap: 0 1.4rem; align-items: start; margin: 1.6rem 0; }
+  .sid-hoger:has(> .annons) > .art { grid-column: 1; grid-row: 1 / span 9; margin: 0 4px; }
+  .sid-hoger > .annons { grid-column: 2; margin: 4px 0 1rem; }
+  .annonsrad { flex-wrap: nowrap; }
+}
+
+/* ---------- Hela ombrytningen ---------- */
+/* Tre lika spalter. Huvudpuffen och de stora delar på de två vänstra, kolumnen
+   och dess annonser står i den högra genom båda raderna, och notiserna går i
+   tre spalter under dem i full bredd. */
+
+@media (min-width: 66rem) {
+  .sidkropp { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  .sidkropp.med-kolumn {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas: "huvud hoger" "stora hoger" "nedre nedre" "notiser notiser";
+    grid-template-rows: auto 1fr auto auto;
+  }
+  .sid-huvud { grid-area: huvud; padding-right: 1.6rem; }
+  .stora { grid-area: stora; padding-right: 1.6rem; }
+  .sid-hoger { grid-area: hoger; display: block; border-left: 1px solid var(--linje); padding-left: 1.6rem; }
+  .notiser { grid-area: notiser; }
+  .med-kolumn > .nedre { grid-area: nedre; }
+  .sidkropp:not(.med-kolumn) .sid-huvud, .sidkropp:not(.med-kolumn) .stora { padding-right: 0; }
+
+  .plats-huvud { padding-bottom: 1.2rem; }
+  .plats-huvud .art-kropp { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 0 1.8rem; }
+
+  .plats-kolumn { margin: 0 4px 0; padding: 1rem 1rem 0.9rem; display: block; }
+  .plats-kolumn.med-bild { display: block; }
+  .plats-kolumn.med-bild > .bild { margin: 0.8rem auto 0.9rem; }
+  .plats-kolumn .ingress { font-size: 0.95rem; }
+  .plats-kolumn .vinjett { padding-left: 0.9rem; padding-right: 0.9rem; }
+  .sid-hoger:has(> .annons) { display: block; margin: 0; }
+  .sid-hoger:has(> .annons) > .art { margin: 0 4px; }
+  .sid-hoger > .annons { margin: 1.6rem 0 0; }
+  .stack > .annons { margin: 0.4rem 0 1.2rem; }
+  /* De stora: bilden till vänster i texten, som ett stick i spalten. */
+  .plats-stor .bild { float: left; width: 46%; max-width: none; margin: 0.35rem 1.1rem 0.4rem 0; }
+  .plats-stor .art-huvud { margin-bottom: 0.7rem; }
+  .plats-stor .ingress p { text-align: left; }
+  .plats-stor .brodtext > p:first-child::first-letter { float: none; font: inherit; padding: 0; line-height: inherit; }
+  .plats-stor::after { content: ''; display: block; clear: both; }
+
+  .notiser { column-count: 3; column-gap: 2rem; border-top: 3px double var(--linje); margin-top: 0.2rem; }
+  .notiser > .annons { max-width: 12rem; margin: 0.9rem auto; }
+}
+
+/* ======================================================================
+   Den nedre ombrytningen: bred, hög, bildnotis, kort, ram och slag.
+   Varje plats har sin egen form, så att sidan blir ett lapptäcke av
+   rektanglar i olika storlekar och inte ett rutnät. Se DESIGN.md.
+   ====================================================================== */
+
+/* Den breda: rubriken över hela modulen, bilden stor till vänster och texten
+   i två smala spalter bredvid. Skiljs från huvudpuffen av en dubbel linje. */
+.stora:has(.stack-bred) { border-top: 3px double var(--linje); }
+.plats-bred { padding: 1.1rem 0 1.2rem; }
+.plats-bred .rubrik { font-size: clamp(1.75rem, 6.2vw, 2.45rem); line-height: 1.04; }
+.plats-bred .underrubrik { font-size: 1.12rem; }
+.plats-bred .art-huvud { margin-bottom: 0.9rem; }
+.plats-bred .bild { margin: 0 0 0.9rem; }
+.plats-bred .ingress p { text-align: left; }
+
+/* Den nedre ombrytningen, telefonen: spalterna efter varandra. */
+.nedre { border-top: 3px solid var(--linje); margin-top: 0.3rem; }
+.spalt > * + * { border-top: 1px solid var(--linje); }
+.spalt + .spalt { border-top: 1px solid var(--linje); }
+.spalt > .annons { border-top: 0; margin: 1.1rem 0; }
+.spalt > .annons + * { border-top: 1px solid var(--linje); }
+
+/* Hög: bilden överst i full spaltbredd, rubriken under den mellan linjer. */
+.plats-hog { padding: 1.1rem 0 1.1rem; }
+.plats-hog .bild { margin: 0 0 0.7rem; }
+.plats-hog .art-huvud { border-top: 1px solid var(--linje); border-bottom: 1px solid var(--linje); padding: 0.45rem 0 0.5rem; margin-bottom: 0.75rem; }
+.plats-hog .rubrik { font-size: clamp(1.5rem, 5.6vw, 1.7rem); line-height: 1.1; }
+.plats-hog .underrubrik { font-size: 1rem; margin-top: 0.2rem; }
+.plats-hog .ingress { font-size: 0.97rem; line-height: 1.55; }
+.plats-hog .ingress p { text-align: left; }
+
+/* Bildnotis: bilden dominerar, texten är en kursiv rubrik och en mening. */
+.plats-bildnotis { padding: 1.1rem 0 1rem; }
+.plats-bildnotis .bild { margin: 0 0 0.55rem; }
+.plats-bildnotis .rubrik { font-size: clamp(1.4rem, 5.2vw, 1.6rem); font-style: italic; font-weight: 400; line-height: 1.12; }
+.plats-bildnotis .ingress { font-size: 0.95rem; line-height: 1.5; text-align: center; margin-top: 0.35rem; }
+.plats-bildnotis .ingress p { text-align: center; }
+
+/* Kort om orten: notiser utan bild, rubrik i kapitäler och en mening,
+   åtskilda av en kort linje. */
+.kortspalt { padding: 0.9rem 0 1rem; }
+.spalt > .kortspalt { border-top: 0; padding-top: 0.2rem; }
+.kortvinjett {
+  font-family: var(--rubrik);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 0.2rem;
+  padding: 0.25rem 0 0.3rem;
+  border-top: 3px double var(--linje);
+  border-bottom: 1px solid var(--linje);
+}
+.plats-kort { padding: 0.75rem 0 0.7rem; }
+.plats-kort + .plats-kort { background: linear-gradient(var(--linje), var(--linje)) top center / 3.5rem 1px no-repeat; }
+.plats-kort .rubrik {
+  font-size: 1.02rem;
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  text-align: left;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+.plats-kort .ingress { font-size: 0.93rem; line-height: 1.5; }
+
+/* Ram: en notis i en tunn ram, rubriken i versaler. */
+.spalt > .plats-ram, .plats-ram { border: 1px solid var(--linje); padding: 0.75rem 0.9rem 0.8rem; margin: 1.1rem 0; }
+.spalt > .plats-ram + * { border-top: 0; }
+.plats-ram .rubrik { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; line-height: 1.25; }
+.plats-ram .underrubrik { font-size: 0.9rem; margin: 0.15rem 0 0.45rem; }
+.plats-ram .art-huvud { border-bottom: 1px solid var(--linje-svag); padding-bottom: 0.4rem; margin-bottom: 0.5rem; }
+.plats-ram .ingress { font-size: 0.93rem; line-height: 1.5; }
+/* I telefonen flyter ramnotisens bild till höger i texten, så att den förblir en notis. */
+@media (max-width: 45.99rem) {
+  .plats-ram .bild { float: right; width: 40%; margin: 0.3rem 0 0.3rem 0.9rem; }
+  .plats-ram::after { content: ''; display: block; clear: both; }
+}
+
+/* Slag: en liten notis med en ovanligt stor rubrik. */
+.plats-slag { padding: 1rem 0 1.1rem; }
+.spalt > .plats-slag { border-top: 3px double var(--linje); }
+.plats-slag .rubrik { font-size: clamp(2.5rem, 12vw, 3.1rem); line-height: 0.94; letter-spacing: -0.01em; text-align: left; text-wrap: balance; }
+.plats-slag .underrubrik { font-style: normal; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; text-align: left; margin: 0.55rem 0 0.5rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--linje); }
+.plats-slag .ingress { font-size: 0.95rem; line-height: 1.52; }
+
+/* De små: ingen anfang, vänsterställt, ett diskret ☞ efter texten. */
+:is(.plats-bildnotis, .plats-kort, .plats-ram, .plats-slag) .brodtext > p:first-child::first-letter { float: none; font: inherit; padding: 0; line-height: inherit; }
+:is(.plats-kort, .plats-ram, .plats-slag) .ingress p { text-align: left; }
+.pek { font-family: var(--rubrik); white-space: nowrap; }
+
+/* Mellanbredd: den breda får bilden till vänster; den nedre ombrytningen går
+   i två spalter, och en bred nedre spalt (från 6 tolftedelar) tar en hel rad. */
+@media (min-width: 46rem) {
+  .plats-bred .art-kropp { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 0 1.4rem; align-items: start; }
+  .plats-bred.utan-bild .art-kropp { grid-template-columns: minmax(0, 1fr); }
+  .plats-bred .bild { margin: 0; }
+  .plats-bred .ingress { column-count: 2; column-gap: 1.2rem; column-rule: 1px solid var(--linje-svag); }
+  .plats-bred .brodtext > p:first-child::first-letter { font-size: 3.1em; }
+
+  .nedre {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row dense;
+    background: linear-gradient(var(--linje), var(--linje)) center top / 1px 100% no-repeat;
+  }
+  .spalt { padding: 0 1.2rem; }
+  .spalt:nth-child(odd) { padding-left: 0; }
+  .spalt:nth-child(even) { padding-right: 0; }
+  .spalt + .spalt { border-top: 0; }
+  .spalt-bred { grid-column: 1 / -1; background: var(--papper); padding: 0; border-top: 1px solid var(--linje); border-bottom: 1px solid var(--linje); }
+  /* Bildnotisen i full bredd: bilden till vänster, rubriken och meningen nere till höger som en bildtext. */
+  .spalt-bred .plats-bildnotis { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-rows: 1fr auto auto; gap: 0 1.6rem; }
+  .spalt-bred .plats-bildnotis .bild { grid-row: 1 / span 3; grid-column: 1; margin: 0; }
+  .spalt-bred .plats-bildnotis > .art-huvud { grid-column: 2; grid-row: 2; }
+  .spalt-bred .plats-bildnotis > .ingress { grid-column: 2; grid-row: 3; }
+  /* Kort om orten i en bred spalt: notiserna sida vid sida. */
+  .spalt-bred .kortspalt { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.6rem; }
+  .spalt-bred .kortvinjett { grid-column: 1 / -1; }
+  .spalt-bred .plats-kort:nth-of-type(even) { background: none; border-left: 1px solid var(--linje-svag); margin-left: -1.3rem; padding-left: 1.3rem; }
+}
+
+/* Hela ombrytningen: spalterna i utgåvefilens bredder, kant i kant, med
+   lodräta linjer emellan. */
+@media (min-width: 66rem) {
+  .plats-bred { padding-top: 1.2rem; }
+  .plats-bred .art-kropp { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); gap: 0 1.5rem; }
+
+  .nedre { grid-template-columns: var(--nedre); background: none; margin-top: 0.4rem; }
+  .spalt, .spalt:nth-child(odd), .spalt:nth-child(even) { padding: 0 1.15rem; }
+  .spalt:first-child { padding-left: 0; }
+  .spalt:last-child { padding-right: 0; }
+  .spalt + .spalt { border-left: 1px solid var(--linje); }
+  .spalt-bred { grid-column: auto; background: none; border-top: 0; border-bottom: 0; }
+  .spalt-bred .plats-bildnotis { display: block; }
+  .spalt-bred .plats-bildnotis .bild { margin: 0 0 0.55rem; }
+}
+
+/* ---------- Ej ombrutet (bara i korrekturbygget) ---------- */
+
+.ej-ombrutet { margin-top: 2.6rem; border: 2px solid var(--stampel); padding: 1rem 1.2rem; }
+.ej-ombrutet .avdelning { color: var(--stampel); }
+.ej-ombrutet-forklaring { font-style: italic; margin: 0 0 0.6rem; }
+.ej-ombrutet ul { margin: 0; padding-left: 1.2rem; }
+.ej-ombrutet .intern { color: var(--grå); font-size: 0.85rem; }
+
+/* ---------- Arkivet ---------- */
+
+.arkiv-rubrik { font-size: 1.1rem; }
+.arkiv-ingress { text-align: center; font-style: italic; margin: -0.4rem 0 1.6rem; color: var(--grå); }
+.arkiv main { max-width: 48rem; margin: 0 auto; }
+.arkivpost { padding: 1.2rem 0 1.3rem; border-bottom: 1px solid var(--linje); }
+.arkivpost::after { content: ''; display: block; clear: both; }
+.arkiv-nr { font-family: var(--rubrik); font-size: 1.5rem; font-weight: 700; margin: 0 0 0.3rem; }
+.arkiv-nr a { text-decoration: none; }
+.arkiv-nr span { font-weight: 400; font-style: italic; font-size: 1rem; color: var(--grå); margin-left: 0.4rem; }
+.arkivpost .rubrik { font-size: 1.4rem; text-align: left; }
+.arkivpost .underrubrik { text-align: left; font-size: 1rem; }
+.arkivpost .stampel-liten { margin: 0.2rem 0 0.6rem; }
+.innehall { list-style: none; padding: 0; margin: 0.7rem 0 0; font-size: 0.95rem; line-height: 1.45; }
+.innehall li { padding: 0.18rem 0; border-top: 1px dotted var(--linje-svag); }
+.innehall-kolumn a { font-style: italic; }
+.innehall-kolumn::after { content: ' (kolumnen)'; color: var(--grå); font-size: 0.85em; }
+.tumnagel { float: right; width: 34%; max-width: 10rem; margin: 0.2rem 0 0.5rem 1.2rem; }
+.tumnagel img { display: block; width: 100%; height: auto; }
+
+/* ---------- Artikelsidan ---------- */
+
+.artikelsida .nrrad a { text-decoration: none; border-bottom: 1px solid var(--linje-svag); }
+
+/* ---------- Redaktionen ----------
+   Ett personalgalleri kring 1900: utgivaren i en impressumram överst,
+   chefredaktören något större, sedan medarbetarna i ovala porträtt.
+   En spalt i telefonen, två från 40rem, tre från 62rem. */
+
+.redaktionen main { max-width: 66rem; margin: 0 auto; }
+.redaktion-rubrik { font-size: 1.1rem; }
+.redaktion-ingress {
+  max-width: var(--satsbredd);
+  margin: -0.2rem auto 2rem;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.6;
+  hyphens: manual;
+  text-wrap: pretty;
+}
+
+/* Impressumrutan: utgivaren i dubbel ram, typografi och ett litet porträtt. */
+.impressum {
+  max-width: 34rem;
+  margin: 0 auto 2.6rem;
+  padding: 1.1rem 1.4rem 1.2rem;
+  border: 3px double var(--linje);
+  outline: 1px solid var(--linje);
+  outline-offset: 4px;
+  text-align: center;
+}
+.impressum-titel {
+  font-family: var(--rubrik);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 0.2rem;
+}
+.impressum .orn { font-size: 1rem; line-height: 1; margin: 0.2rem 0 0.5rem; }
+.impressum-namn {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--linje);
+}
+.impressum-text { margin: 0; font-size: 0.98rem; line-height: 1.58; text-align: left; hyphens: auto; }
+@media (min-width: 30rem) { .impressum-text { text-align: justify; } }
+/* Med porträtt: ovalen ovanför texten i telefonen, till vänster om den i bred vy. */
+.impressum.med-portratt .portratt { max-width: 11rem; margin: 0.2rem auto 0.8rem; }
+@media (min-width: 44rem) {
+  .impressum.med-portratt { max-width: 44rem; display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.6rem; align-items: center; }
+  .impressum.med-portratt .portratt { margin: 0; max-width: none; }
+}
+
+/* Porträtten. Gravyren har egen oval vinjett på krämfärgat blad; bladets hörn
+   tonas bort med en rund mask så att ovalen står fri på sidan. Dagupplagan
+   trycker med multiply, kvällsupplagan dämpar som de andra gravyrerna. */
+.portratt { margin: 0 auto 0.9rem; max-width: 15rem; background: var(--papper); }
+.portratt img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  mix-blend-mode: multiply;
+  /* Porträttbladet är gulare än tidningspapperet; det ljusas och bleks så att
+     det går upp i sidan, och bladets kanter tonas bort utanför ovalen. */
+  filter: saturate(0.55) brightness(1.08) contrast(1.06);
+  -webkit-mask-image: radial-gradient(ellipse 46% 50% at 50% 50%, #000 88%, transparent 100%);
+  mask-image: radial-gradient(ellipse 46% 50% at 50% 50%, #000 88%, transparent 100%);
+}
+@media (prefers-color-scheme: dark) {
+  .portratt img { mix-blend-mode: normal; filter: brightness(0.66) sepia(0.3) contrast(1.08); }
+}
+/* Korrekturbyggets platshållare: en tom oval med ett ornament. */
+.portratt-saknas {
+  width: 72%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--linje-svag);
+  border-radius: 50%;
+  outline: 1px solid var(--linje-svag);
+  outline-offset: 5px;
+  display: grid;
+  place-items: center;
+  color: var(--linje-svag);
+  font-family: var(--rubrik);
+  font-size: 2rem;
+  margin-top: 0.6rem;
+  margin-bottom: 1.3rem;
+}
+
+.medarbetare-namn {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0;
+  hyphens: none;
+}
+.medarbetare-titel {
+  font-family: var(--rubrik);
+  font-style: italic;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0.15rem 0 0.6rem;
+}
+.medarbetare-titel::after {
+  content: '';
+  display: block;
+  width: 3.5rem;
+  margin: 0.55rem auto 0;
+  border-top: 1px solid var(--linje);
+}
+.medarbetare-pres { margin: 0; font-size: 0.95rem; line-height: 1.56; text-align: left; hyphens: auto; }
+
+/* Chefredaktören: större, under en dubbel linje, i bred vy porträttet bredvid texten. */
+.chefen {
+  border-top: 3px double var(--linje);
+  border-bottom: 1px solid var(--linje);
+  padding: 1.6rem 0 1.5rem;
+  margin: 0 auto;
+}
+.chefen .portratt { max-width: 19rem; }
+.chefen .medarbetare-namn { font-size: clamp(1.35rem, 4.6vw, 1.7rem); }
+.chefen .medarbetare-titel { font-size: 1.15rem; }
+.chefen .medarbetare-pres { font-size: 1.02rem; line-height: 1.6; }
+.chefen .medarbetare-text { max-width: var(--satsbredd); margin: 0 auto; }
+
+/* Galleriet. Linjerna ligger på posterna: en tunn linje över varje post, och i
+   två och tre spalter en svag lodrät linje mellan spalterna. */
+.galleri { display: grid; grid-template-columns: minmax(0, 1fr); }
+.i-galleriet { padding: 1.5rem 0 1.6rem; border-top: 1px solid var(--linje); }
+.i-galleriet:first-child { border-top: 0; }
+.redaktion-slut { font-size: 1.1rem; margin-top: 1.6rem; }
+
+@media (min-width: 30rem) {
+  .medarbetare-pres { text-align: justify; }
+}
+
+@media (min-width: 40rem) {
+  .galleri { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .i-galleriet { padding: 1.5rem 1.4rem 1.6rem; }
+  .i-galleriet:nth-child(-n + 2) { border-top: 0; }
+  .i-galleriet:nth-child(2n + 1) { padding-left: 0; }
+  .i-galleriet:nth-child(2n) { padding-right: 0; border-left: 1px solid var(--linje-svag); }
+}
+
+@media (min-width: 52rem) {
+  .chefen { display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 2.2rem; align-items: center; max-width: 56rem; }
+  .chefen .portratt { margin: 0; max-width: none; }
+  .chefen .medarbetare-text { margin: 0; }
+  .chefen .medarbetare-namn, .chefen .medarbetare-titel { text-align: left; }
+  .chefen .medarbetare-titel::after { margin-left: 0; }
+}
+
+@media (min-width: 62rem) {
+  .galleri { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .i-galleriet, .i-galleriet:nth-child(n) { padding: 1.6rem 1.5rem 1.7rem; border-left: 0; border-top: 1px solid var(--linje); }
+  .i-galleriet:nth-child(-n + 3) { border-top: 0; }
+  .i-galleriet:nth-child(3n + 1) { padding-left: 0; }
+  .i-galleriet:nth-child(3n) { padding-right: 0; }
+  .i-galleriet:not(:nth-child(3n + 1)) { border-left: 1px solid var(--linje-svag); }
+  /* En ensam post på sista raden ställs i mittspalten, med raden linje i hela bredden. */
+  .i-galleriet:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+    position: relative;
+    border-top: 0;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--linje-svag);
+    border-right: 1px solid var(--linje-svag);
+  }
+  .i-galleriet:last-child:nth-child(3n + 1)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    right: -100%;
+    border-top: 1px solid var(--linje);
+  }
+}
+
+/* ======================================================================
+   Veckobladets podd. Grammofonen är spelknappen: hela sticket, därpå
+   skivan (utan tonarm, cirkulärt beskuren) som snurrar när ljudet spelar,
+   och överst tonarmen ensam, som står still. Skivans läge sätts i procent
+   av bildens mått av bygget. Se DESIGN.md, ”Podden”.
+   ====================================================================== */
+
+.podd {
+  margin: 1.6rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 3px double var(--linje);
+  text-align: center;
+}
+/* Knappen visar bara grammofonen: bildens tomma papper över och under
+   skärs bort med negativa marginaler (procent av bredden). */
+.grammofon {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  mix-blend-mode: multiply;
+}
+.grammofon:disabled { cursor: default; }
+.grammofon:focus-visible { outline: 1px solid var(--linje); outline-offset: 3px; }
+.grammofon-plat {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: -19.5% 0 -14%;
+}
+.grammofon-stick, .grammofon-arm {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.grammofon-skiva {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: grammofon-varv 1.8s linear infinite paused;
+  will-change: transform;
+}
+.grammofon-skiva img { display: block; width: 100%; height: 100%; }
+/* 33⅓ varv i minuten. 78 är tidstypiskt men ser nervöst ut i den här graden. */
+.spelar .grammofon-skiva { animation-play-state: running; }
+@keyframes grammofon-varv { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .grammofon-skiva { animation: none; }
+}
+@media (prefers-color-scheme: dark) {
+  .grammofon {
+    mix-blend-mode: normal;
+    clip-path: inset(0 3.8%);
+    filter: brightness(0.66) sepia(0.3) contrast(1.08);
+  }
+}
+
+.podd-namn {
+  font-family: var(--rubrik);
+  font-weight: 700;
+  font-size: 1.12rem;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  margin: 0.5rem 0 0.2rem;
+}
+.podd-rad {
+  font-family: var(--rubrik);
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.42;
+  color: var(--grå);
+  max-width: 24rem;
+  margin: 0 auto 0.6rem;
+  hyphens: manual;
+}
+.podd-reglage { max-width: 22rem; margin: 0 auto; }
+.podd-reglage[hidden] { display: none; }
+.podd-tid {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--brod);
+  font-size: 0.85rem;
+  font-variant-numeric: oldstyle-nums tabular-nums;
+  margin: 0 0 -0.2rem;
+}
+/* Förloppslinjen: tunn, men med en hög träffyta för tummen. */
+.podd-linje {
+  position: relative;
+  height: 1.5rem;
+  cursor: pointer;
+  touch-action: none;
+}
+.podd-linje:focus-visible { outline: 1px dotted var(--linje); outline-offset: 2px; }
+.podd-spar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--linje-svag);
+}
+.podd-fyllt {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  height: 3px;
+  width: 0;
+  background: var(--svarta);
+}
+.podd-fyllt::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  width: 1px;
+  height: 11px;
+  background: var(--svarta);
+}
+.podd-ljud { display: block; width: 100%; margin: 0.4rem 0 0; }
+.podd-ljud[hidden] { display: none; }
+
+@media (min-width: 46rem) and (max-width: 65.99rem) {
+  .sid-hoger > .podd { grid-column: 2; margin: 0 0 1.2rem; }
+}
+@media print {
+  .podd { display: none; }
+}
