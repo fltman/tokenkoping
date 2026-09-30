@@ -1081,6 +1081,14 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
 }
 .podd-ljud { display: block; width: 100%; margin: 0.4rem 0 0; }
 .podd-ljud[hidden] { display: none; }
+.podd-annorstades {
+  font-family: var(--brod);
+  font-size: 0.85rem;
+  line-height: 1.42;
+  margin: 0.5rem auto 0;
+  max-width: 24rem;
+  hyphens: manual;
+}
 
 @media (min-width: 46rem) and (max-width: 65.99rem) {
   .sid-hoger > .podd { grid-column: 2; margin: 0 0 1.2rem; }
