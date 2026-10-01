@@ -548,6 +548,11 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .sid-hoger:has(> .kungorelse) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 14rem); gap: 0 1.4rem; align-items: start; margin: 1.6rem 0; }
   .sid-hoger:has(> .kungorelse) > .art { grid-column: 1; grid-row: 1 / span 9; margin: 0 4px; }
   .sid-hoger > .kungorelse { grid-column: 2; margin: 4px 0 1rem; }
+  /* Högerspalt utan kolumn (bara podd och annonser): en rad kant i kant, där
+     varje annons får bredd efter sitt format, som i annonsfältet. */
+  .sid-hoger:not(:has(> .art)) { display: flex; align-items: flex-start; gap: 1.4rem; border-top: 1px solid var(--linje); padding-top: 1.1rem; margin: 0; }
+  .sid-hoger:not(:has(> .art)) > * { flex-basis: 0; flex-shrink: 1; min-width: 0; margin: 0; }
+  .sid-hoger:not(:has(> .art)) > .podd { flex-grow: 1.2; }
   .kungorelserad { flex-wrap: nowrap; }
 }
 
@@ -557,7 +562,10 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
    tre spalter under dem i full bredd. */
 
 @media (min-width: 66rem) {
-  .sidkropp { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  /* Utan högerspalt måste områdena ändå finnas i mallen; annars skapar
+     grid-area med okända namn implicita spalter och sidan faller sönder. */
+  .sidkropp { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "huvud" "stora" "nedre" "notiser"; border-top: 0; }
+  .sidkropp > .nedre { grid-area: nedre; }
   .sidkropp.med-kolumn {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     grid-template-areas: "huvud hoger" "stora hoger" "nedre nedre" "notiser notiser";
@@ -581,6 +589,9 @@ h1.rubrik, .forstasida .artikel h2.rubrik { font-size: clamp(1.9rem, 6.5vw, 2.9r
   .sid-hoger:has(> .kungorelse) { display: block; margin: 0; }
   .sid-hoger:has(> .kungorelse) > .art { margin: 0 4px; }
   .sid-hoger > .kungorelse { margin: 1.6rem 0 0; }
+  .sid-hoger:not(:has(> .art)) { display: block; border-top: 0; padding-top: 0; }
+  .sid-hoger > .kungorelse:first-child { margin-top: 0.3rem; }
+  .sid-hoger:not(:has(> .art)) > * + * { margin-top: 1.6rem; }
   .stack > .kungorelse { margin: 0.4rem 0 1.2rem; }
   /* De stora: bilden till vänster i texten, som ett stick i spalten. */
   .plats-stor .bild { float: left; width: 46%; max-width: none; margin: 0.35rem 1.1rem 0.4rem 0; }
